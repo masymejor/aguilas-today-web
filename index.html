@@ -1,1 +1,79 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Event Listings</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            margin: 0;\n            padding: 0;\n        }\n        header {\n            background: #007BFF;\n            color: #fff;\n            padding: 10px;\n            text-align: center;\n        }\n        .filters {\n            margin: 20px;\n        }\n        .event-list {\n            padding: 0;\n            list-style-type: none;\n        }\n        .event-item {\n            border: 1px solid #ccc;\n            margin: 10px 0;\n            padding: 10px;\n        }\n        @media (max-width: 600px) {\n            header {\n                font-size: 18px;\n            }\n        }\n    </style>\n</head>\n<body>\n    <header>\n        <h1>Event Listings</h1>\n    </header>\n    <div class="filters">\n        <input type="text" id="search" placeholder="Search events...">\n    </div>\n    <ul class="event-list" id="eventList">\n       <!-- Event items will be injected here -->\n    </ul>\n    <script>\n        const events = [\n            {title: 'Concert A', date: '2026-05-01'},\n            {title: 'Exhibition B', date: '2026-05-05'},\n            {title: 'Festival C', date: '2026-06-10'}\n        ];\n\n        const eventList = document.getElementById('eventList');\n        const searchInput = document.getElementById('search');\n\n        function displayEvents(eventsToDisplay) {\n            eventList.innerHTML = '';\n            eventsToDisplay.forEach(event => {\n                const li = document.createElement('li');\n                li.className = 'event-item';\n                li.textContent = `${event.title} - ${event.date}`;\n                eventList.appendChild(li);\n            });\n        }\n\n        searchInput.addEventListener('input', () => {\n            const searchTerm = searchInput.value.toLowerCase();\n            const filteredEvents = events.filter(event => event.title.toLowerCase().includes(searchTerm));\n            displayEvents(filteredEvents);\n        });\n\n        // Display all events initially\n        displayEvents(events);\n    <\/script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Águilas Today</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <section class="hero">
+            <h1>Welcome to Águilas Today!</h1>
+            <p>Your source for the latest events and news from Águilas.</p>
+        </section>
+    </header>
+
+    <main>
+        <section class="advanced-filters">
+            <h2>Filter Events</h2>
+            <form>
+                <label for="category">Category:</label>
+                <select id="category" name="category">
+                    <option value="all">All</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="sports">Sports</option>
+                    <option value="workshops">Workshops</option>
+                </select>
+                <br>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+                <br>
+                <button type="submit">Apply Filters</button>
+            </form>
+        </section>
+
+        <section class="events">
+            <h2>Upcoming Events</h2>
+            <ul>
+                <li>Event 1: Festival of Águilas</li>
+                <li>Event 2: Art Exhibition</li>
+                <li>Event 3: Music Concert</li>
+                <li>Event 4: Workshop on Local Crafts</li>
+                <li>Event 5: Sports Tournament</li>
+                <li>Event 6: Historical Tour</li>
+                <li>Event 7: Beach Cleanup</li>
+                <li>Event 8: Outdoor Movie Night</li>
+                <li>Event 9: Food Fair</li>
+                <li>Event 10: Dance Competition</li>
+                <li>Event 11: Yoga Retreat</li>
+                <li>Event 12: Photography Contest</li>
+                <li>Event 13: Tech Conference</li>
+                <li>Event 14: Charity Run</li>
+                <li>Event 15: Book Fair</li>
+                <li>Event 16: Local Music Festival</li>
+                <li>Event 17: Science Workshop</li>
+                <li>Event 18: Artisan Market</li>
+                <li>Event 19: Cultural Parade</li>
+                <li>Event 20: Cooking Class</li>
+            </ul>
+        </section>
+
+        <section class="sharing">
+            <h2>Share on WhatsApp</h2>
+            <p>Share this page with friends:</p>
+            <a href="https://api.whatsapp.com/send?text=Check out Águilas Today!">Share on WhatsApp</a>
+        </section>
+
+        <section class="statistics">
+            <h2>Event Statistics</h2>
+            <p>Total Events: 20</p>
+            <p>Categories Offered: Cultural, Sports, Workshops</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Águilas Today</p>
+    </footer>
+</body>
+</html>
