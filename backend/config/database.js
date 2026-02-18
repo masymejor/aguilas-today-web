@@ -1,36 +1,49 @@
 const { Pool } = require('pg');
 
-// Database connection pool configuration
 const pool = new Pool({
-  user: 'your_username',       // replace with your database username
-  host: 'localhost',            // replace with your database host
-  database: 'your_database',    // replace with your database name
-  password: 'your_password',    // replace with your database password
-  port: 5432,                   // default PostgreSQL port
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-// Example function to create a table
-const createTable = async () => {
-  const query = `
-    CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
-      username VARCHAR(50) NOT NULL UNIQUE,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
+const createTables = async () => {
   try {
-    await pool.query(query);
-    console.log('Table created successfully');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS usuarios ( 
+        id SERIAL PRIMARY KEY, 
+        username VARCHAR(255) NOT NULL, 
+        email VARCHAR(255) NOT NULL, 
+        password VARCHAR(255) NOT NULL, 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+      );
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS eventos ( 
+        id SERIAL PRIMARY KEY, 
+        nombre VARCHAR(255) NOT NULL, 
+        fecha TIMESTAMP NOT NULL, 
+        lugar VARCHAR(255), 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+      );
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS promotores ( 
+        id SERIAL PRIMARY KEY, 
+        nombre VARCHAR(255) NOT NULL, 
+        contacto VARCHAR(255), 
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+      );
+    `);
+
+    console.log('Tablas creadas con éxito');
   } catch (error) {
-    console.error('Error creating table:', error);
+    console.error('Error al crear las tablas', error);
   }
 };
 
-// Export the pool and createTable function
-module.exports = {
-  pool,
-  createTable,
-};
+createTables();
 
-// You can call createTable() function to create the table when needed.
+module.exports = pool;
